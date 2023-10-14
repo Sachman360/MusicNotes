@@ -6,8 +6,10 @@ public class Triad extends Chord {
 
     public Triad(Note i, Note j, Note k) {
         super(new ArrayList<>(Arrays.asList(i, j, k)));
-        base = chord.get(0);
-        type = getType();
+        List<Note> temp = new ArrayList<>(Arrays.asList(i, j, k));
+        sortTemp(temp);
+        base = temp.get(0);
+        type = getType(temp);
         name = base + type;
         List<String> types = new ArrayList<>();
         switch(type) {
@@ -28,40 +30,29 @@ public class Triad extends Chord {
 
     }
 
-    public String getType() {
-        int iPos = chord.get(0).getPosition();
-        int jPos = chord.get(1).getPosition();
-        int kPos = chord.get(2).getPosition();
-        int ij = Math.abs(jPos - iPos);
-        int jk = Math.abs(kPos - jPos);
-        int ik = Math.abs(kPos - iPos);
-        int first;
-        int second;
-        if(ik == ij + jk) {
-            if(iPos < kPos) {
-                first = ij;
-                second = jk;
-            } else {
-                first = jk;
-                second = ij;
-            }
-        } else if(ij == ik + jk) {
-            if(iPos < jPos) {
-                first = ik;
-                second = jk;
-            } else {
-                first = jk;
-                second = ik;
-            }
-        } else {
-            if(jPos < kPos) {
-                first = ij;
-                second = ik;
-            } else {
-                first = ik;
-                second = ij;
-            }
+    public void sortTemp(List<Note> temp) {
+        sort(temp);
+        System.out.println(temp);
+        int ij = getInterval(temp.get(0), temp.get(1));
+        int jk = getInterval(temp.get(1), temp.get(2));
+        int ki = getInterval(temp.get(2), temp.get(0));
+        System.out.println(ij + " " + jk + " " + ki);
+        if(ij == 5 || ij == 6) {
+            temp.add(temp.remove(0));
+        } else if(jk == 5 || jk == 6) {
+            temp.add(temp.remove(0));
+            temp.add(temp.remove(0));
         }
+        System.out.println(temp);
+    }
+
+    public String getType(List<Note> temp) {
+        int ij = getInterval(temp.get(0), temp.get(1));
+        int jk = getInterval(temp.get(1), temp.get(2));
+        int ki = getInterval(temp.get(2), temp.get(0));
+        int first = ij;
+        int second = jk;
+        System.out.println(first + " " + second);
         if(first == 4 && second == 3) {
             return "M";
         } else if(first == 3 && second == 4) {
@@ -75,5 +66,25 @@ public class Triad extends Chord {
         }
     }
 
+    public void sort(List<Note> l) {
+        for(int i = 0; i < l.size(); i++) {
+            for(int j = 0; j < l.size() - i - 1; j++) {
+                if(l.get(j).getPosition() > l.get(j + 1).getPosition()) {
+                    l.add(j + 1, l.remove(j));
+                }
+            }
+        }
+    }
+
+    public int getInterval(Note i, Note j) {
+        int interval = j.getId() - i.getId();
+        while(interval < 0) {
+            interval += 12;
+        }
+        while(interval >= 12) {
+            interval -= 12;
+        }
+        return interval;
+    }
 
 }

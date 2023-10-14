@@ -63,4 +63,8 @@ public class Note {
     public String printDescription() {
         return name + octave + ", ID: " + id;
     }
+
+    public int getId() {
+        return id;
+    }
 }

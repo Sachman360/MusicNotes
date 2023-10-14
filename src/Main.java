@@ -13,7 +13,7 @@ public class Main {
             //System.out.print(melody.get(i) + " ");
         }
         System.out.println();
-        Chord c = new Triad(new Note("A"), new Note("D"), new Note("F#"));
+        Chord c = new Triad(new Note("F#", 1), new Note("D"), new Note("A", 6));
         System.out.println(c.printDescription());
     }
 }
