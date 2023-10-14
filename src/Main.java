@@ -10,10 +10,10 @@ public class Main {
         melody.add(new Note("A"));
         melody.add(new Note("D", 5));
         for(int i = 0; i < melody.size(); i++) {
-            System.out.print(melody.get(i) + " ");
+            //System.out.print(melody.get(i) + " ");
         }
         System.out.println();
-        Chord c = new Chord(new Note("C#"), new Note("E#"), new Note("A"));
-        System.out.println(c);
+        Chord c = new Triad(new Note("A"), new Note("D"), new Note("F#"));
+        System.out.println(c.printDescription());
     }
 }
