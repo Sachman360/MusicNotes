@@ -5,7 +5,7 @@ import java.util.List;
 public class Triad extends Chord {
 
     public Triad(Note i, Note j, Note k) {
-        super(new ArrayList<>(Arrays.asList(i, j, k)));
+        chord = new ArrayList<>(Arrays.asList(i, j, k));;
         List<Note> temp = new ArrayList<>(Arrays.asList(i, j, k));
         sortTemp(temp);
         base = temp.get(0);
@@ -32,27 +32,20 @@ public class Triad extends Chord {
 
     public void sortTemp(List<Note> temp) {
         sort(temp);
-        System.out.println(temp);
         int ij = getInterval(temp.get(0), temp.get(1));
         int jk = getInterval(temp.get(1), temp.get(2));
         int ki = getInterval(temp.get(2), temp.get(0));
-        System.out.println(ij + " " + jk + " " + ki);
         if(ij == 5 || ij == 6) {
             temp.add(temp.remove(0));
         } else if(jk == 5 || jk == 6) {
             temp.add(temp.remove(0));
             temp.add(temp.remove(0));
         }
-        System.out.println(temp);
     }
 
     public String getType(List<Note> temp) {
-        int ij = getInterval(temp.get(0), temp.get(1));
-        int jk = getInterval(temp.get(1), temp.get(2));
-        int ki = getInterval(temp.get(2), temp.get(0));
-        int first = ij;
-        int second = jk;
-        System.out.println(first + " " + second);
+        int first = getInterval(temp.get(0), temp.get(1));
+        int second = getInterval(temp.get(1), temp.get(2));
         if(first == 4 && second == 3) {
             return "M";
         } else if(first == 3 && second == 4) {

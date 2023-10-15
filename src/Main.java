@@ -13,7 +13,10 @@ public class Main {
             //System.out.print(melody.get(i) + " ");
         }
         System.out.println();
-        Chord c = new Triad(new Note("F#", 1), new Note("D"), new Note("A", 6));
+        Chord c = new Triad(new Note(18), new Note("D"), new Note("A", 6));
         System.out.println(c.printDescription());
+        List<Note> l2 = new ArrayList<>(Arrays.asList(new Note(17), new Note(20), new Note("Cb")));
+        Chord c2 = new Chord(l2);
+        System.out.println(c2.printDescription());
     }
 }

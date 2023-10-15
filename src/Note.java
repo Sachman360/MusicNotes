@@ -25,6 +25,16 @@ public class Note {
         }
     }
 
+    public Note(int idNum) {
+        id = idNum;
+        int position = id;
+        while(position >= 12) {
+            position -= 12;
+            octave++;
+        }
+        name = getName(position);
+    }
+
     public int getPosition() {
         switch(name) {
             case "C", "B#":
@@ -53,6 +63,37 @@ public class Note {
                 return 11;
             default:
                 return -1;
+        }
+    }
+
+    public String getName(int position) {
+        switch(position) {
+            case 0:
+                return "C";
+            case 1:
+                return "C#";
+            case 2:
+                return "D";
+            case 3:
+                return "Eb";
+            case 4:
+                return "E";
+            case 5:
+                return "F";
+            case 6:
+                return "F#";
+            case 7:
+                return "G";
+            case 8:
+                return "Ab";
+            case 9:
+                return "A";
+            case 10:
+                return "Bb";
+            case 11:
+                return "B";
+            default:
+                return "";
         }
     }
 
