@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Note {
     private String name;
     private int octave;

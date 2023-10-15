@@ -14,9 +14,16 @@ public class Main {
         }
         System.out.println();
         Chord c = new Triad(new Note(18), new Note("D"), new Note("A", 6));
-        System.out.println(c.printDescription());
+        //System.out.println(c.printDescription());
         List<Note> l2 = new ArrayList<>(Arrays.asList(new Note(17), new Note(20), new Note("Cb")));
         Chord c2 = new Chord(l2);
-        System.out.println(c2.printDescription());
+        //System.out.println(c2.printDescription());
+        Chord c3 = new Seventh(new Note(7), new Note(4), new Note(0), new Note(11));
+        //System.out.println(c3.printDescription());
+        Chord c4 = new Chord(new ArrayList<>(Arrays.asList(new Note(50), new Note(47), new Note(55), new Note(41))));
+        //System.out.println(c4.printDescription());
+
+        Chord c5 = new Chord("Cm7");
+        System.out.println(c5.printDescription());
     }
 }
