@@ -35,8 +35,21 @@ public class Main {
         firstSong.addChord(c3);
         firstSong.addChord(c4);
         firstSong.addChord(c5);
-        System.out.println(firstSong);
+        //System.out.println(firstSong);
 
-        Key k = new Key(new Note("C"), "m");
+        Key k = new Key(new Note("F##"), "m");
+
+        /*
+        Note test = new Note(47);
+        System.out.println(test.printDescription());
+        test.sharp();
+        System.out.println(test.printDescription());
+        test.flat();
+        System.out.println(test.printDescription());
+        test.flat();
+        System.out.println(test.printDescription());
+        test.flat();
+        System.out.println(test.printDescription());
+        */
     }
 }
