@@ -24,6 +24,19 @@ public class Main {
         //System.out.println(c4.printDescription());
 
         Chord c5 = new Chord("Cm7");
-        System.out.println(c5.printDescription());
+        //System.out.println(c5.printDescription());
+
+        Song firstSong = new Song();
+        for(int i = 0; i < melody.size(); i++) {
+            firstSong.addNote(melody.get(i));
+        }
+        firstSong.addChord(c);
+        firstSong.addChord(c2);
+        firstSong.addChord(c3);
+        firstSong.addChord(c4);
+        firstSong.addChord(c5);
+        System.out.println(firstSong);
+
+        Key k = new Key(new Note("C"), "m");
     }
 }
