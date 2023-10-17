@@ -26,7 +26,7 @@ public class Main {
         Chord c5 = new Chord("Cm7");
         //System.out.println(c5.printDescription());
 
-        Song firstSong = new Song();
+        Song firstSong = new Song(new Key(melody.get(4), "M"));
         for(int i = 0; i < melody.size(); i++) {
             firstSong.addNote(melody.get(i));
         }
@@ -35,11 +35,12 @@ public class Main {
         firstSong.addChord(c3);
         firstSong.addChord(c4);
         firstSong.addChord(c5);
-        //System.out.println(firstSong);
+        System.out.println(firstSong);
+        System.out.println(firstSong.romanNumeralAnalysis());
 
         Key k = new Key(new Note("F##"), "m");
-        Chord c6 = new Chord("F#*7");
-        c6.printDescription();
+        Chord c6 = new Chord("F#7");
+        //System.out.println(c6.getRomanNumeral(firstSong.key));
 
         /*
         Note test = new Note(47);

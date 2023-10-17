@@ -20,13 +20,9 @@ public class Seventh extends Chord{
                 id = base.getPosition() + 72;
             break;
             case "/*":
-                System.out.println(base);
-                System.out.println(base.getPosition());
                 id = base.getPosition() + 84;
             break;
             case "*7":
-                System.out.println(base);
-                System.out.println(base.getPosition());
                 id = base.getPosition() + 96;
             break;
             default:

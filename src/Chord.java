@@ -86,7 +86,6 @@ public class Chord {
                 k.scale.get(2).flat();
                 k.scale.get(4).flat();
                 k.scale.get(6).flat();
-                System.out.println(k.scale.get(0));
                 s = new Seventh(k.scale.get(0), k.scale.get(2), k.scale.get(4), k.scale.get(6));
                 chord = s.chord;
                 id = s.id;
@@ -96,7 +95,6 @@ public class Chord {
                 k.scale.get(4).flat();
                 k.scale.get(6).flat();
                 k.scale.get(6).flat();
-                System.out.println(k.scale.get(0));
                 s = new Seventh(k.scale.get(0), k.scale.get(2), k.scale.get(4), k.scale.get(6));
                 chord = s.chord;
                 id = s.id;
@@ -110,5 +108,44 @@ public class Chord {
 
     public void printDescription() {
         System.out.println(name + ": " + chord + "   ID: " + id);
+    }
+
+    public String getRomanNumeral(Key k) {
+        List<Note> key = k.scale;
+        String check = base.toString();
+        String numeral = "";
+        if(check.equals(key.get(0).toString())) {
+            numeral = "I";
+        } else if(check.equals(key.get(1).toString())) {
+            numeral = "II";
+        } else if(check.equals(key.get(2).toString())) {
+            numeral = "III";
+        } else if(check.equals(key.get(3).toString())) {
+            numeral = "IV";
+        } else if(check.equals(key.get(4).toString())) {
+            numeral = "V";
+        } else if(check.equals(key.get(5).toString())) {
+            numeral = "VI";
+        } else if(check.equals(key.get(6).toString())) {
+            numeral = "VII";
+        } else {
+            numeral = "?";
+        }
+        switch(type) {
+            case "M":
+                return numeral;
+            case "m":
+                return numeral.toLowerCase();
+            case "*", "/*", "*7":
+                return numeral.toLowerCase() + type;
+            case "+", "M7":
+                return numeral + type;
+            case "m7":
+                return numeral.toLowerCase() + "7";
+            case "7":
+                return numeral + "7";
+            default:
+                return "?";
+        }
     }
 }

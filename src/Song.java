@@ -5,12 +5,14 @@ public class Song {
     List<Integer> melodyDurations;
     List<Chord> chords;
     List<Integer> chordDurations;
+    Key key;
 
-    public Song() {
+    public Song(Key k) {
         melody = new ArrayList<>();
         melodyDurations = new ArrayList<>();
         chords = new ArrayList<>();
         chordDurations = new ArrayList<>();
+        key = k;
     }
 
     public void addNote(Note n) {
@@ -60,5 +62,23 @@ public class Song {
         }
 
         return song;
+    }
+
+    public String romanNumeralAnalysis() {
+        String analysis = "";
+        analysis += "\nAnalysis: ";
+        for(int i = 0; i < chords.size(); i++) {
+            if(chordDurations.get(i) > 0) {
+                analysis += chords.get(i).getRomanNumeral(key);
+                for(int j = 0; j < 6 - chords.get(i).getRomanNumeral(key).length(); j++) {
+                    analysis += " ";
+                }
+                for(int k = 0; k < chordDurations.get(i) - 1; k++) {
+                    analysis += "      ";
+                }
+            }
+        }
+
+        return analysis;
     }
 }
