@@ -12,17 +12,23 @@ public class Seventh extends Chord{
         switch(type) {
             case "M7":
                 id = base.getPosition() + 48;
-                break;
+            break;
             case "m7":
                 id = base.getPosition() + 60;
+            break;
             case "7":
                 id = base.getPosition() + 72;
-                break;
+            break;
             case "/*":
+                System.out.println(base);
+                System.out.println(base.getPosition());
                 id = base.getPosition() + 84;
-                break;
+            break;
             case "*7":
+                System.out.println(base);
+                System.out.println(base.getPosition());
                 id = base.getPosition() + 96;
+            break;
             default:
                 id = -1;
         }

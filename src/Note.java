@@ -224,8 +224,8 @@ public class Note {
         return name;
     }
 
-    public String printDescription() {
-        return name + octave + ", ID: " + id;
+    public void printDescription() {
+        System.out.println(name + octave + ", ID: " + id);
     }
 
     public int getId() {

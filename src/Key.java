@@ -49,6 +49,5 @@ public class Key {
             default:
 
         }
-        System.out.println(scale);
     }
 }

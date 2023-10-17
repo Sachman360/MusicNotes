@@ -38,6 +38,8 @@ public class Main {
         //System.out.println(firstSong);
 
         Key k = new Key(new Note("F##"), "m");
+        Chord c6 = new Chord("F#*7");
+        c6.printDescription();
 
         /*
         Note test = new Note(47);
