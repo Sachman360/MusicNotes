@@ -35,10 +35,10 @@ public class Main {
         firstSong.addChord(c3);
         firstSong.addChord(c4);
         firstSong.addChord(c5);
-        System.out.println(firstSong);
-        System.out.println(firstSong.romanNumeralAnalysis());
+        //System.out.println(firstSong);
+        //System.out.println(firstSong.romanNumeralAnalysis());
 
-        Key k = new Key(new Note("F##"), "m");
+        Key k = new Key(new Note("F#"), "M");
         Chord c6 = new Chord("F#7");
         //System.out.println(c6.getRomanNumeral(firstSong.key));
 
@@ -54,5 +54,7 @@ public class Main {
         test.flat();
         System.out.println(test.printDescription());
         */
+
+        //k.printKeySignature();
     }
 }
