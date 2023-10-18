@@ -59,6 +59,10 @@ public class Main {
 
 
         Chord c7 = new Chord("ii*7", new Key(new Note("G"), "M"));
-        c7.printDescription();
+        //c7.printDescription();
+
+        MusicMaker mm = new MusicMaker();
+        Song aisong = mm.generateSong();
+        System.out.println(aisong);
     }
 }

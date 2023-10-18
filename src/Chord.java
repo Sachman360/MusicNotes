@@ -105,7 +105,7 @@ public class Chord {
     public Chord(String romanNumeral, Key k) {
         List<Note> key = k.scale;
         int index = 1;
-        if(romanNumeral.length() > 1 && (romanNumeral.substring(1, 2).equalsIgnoreCase("I") || romanNumeral.substring(1, 2).equals("V"))) {
+        if(romanNumeral.length() > 1 && (romanNumeral.substring(1, 2).equalsIgnoreCase("I") || romanNumeral.substring(1, 2).equalsIgnoreCase("V"))) {
             index = 2;
             if(romanNumeral.length() > 2 && romanNumeral.substring(2, 3).equalsIgnoreCase("I")) {
                 index = 3;

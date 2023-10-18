@@ -51,6 +51,17 @@ public class Key {
         }
     }
 
+    public String toString() {
+        switch(type) {
+            case "M":
+                return note.toString() + " Major";
+            case "m":
+                return note.toString() + " Minor";
+            default:
+                return note.toString();
+        }
+    }
+
     // WORK IN PROGRESS :/
 
     public void printKeySignature() {
