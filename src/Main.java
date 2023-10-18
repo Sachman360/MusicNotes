@@ -56,5 +56,9 @@ public class Main {
         */
 
         //k.printKeySignature();
+
+
+        Chord c7 = new Chord("ii*7", new Key(new Note("G"), "M"));
+        c7.printDescription();
     }
 }

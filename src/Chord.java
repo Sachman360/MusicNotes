@@ -102,6 +102,66 @@ public class Chord {
         }
     }
 
+    public Chord(String romanNumeral, Key k) {
+        List<Note> key = k.scale;
+        int index = 1;
+        if(romanNumeral.length() > 1 && (romanNumeral.substring(1, 2).equalsIgnoreCase("I") || romanNumeral.substring(1, 2).equals("V"))) {
+            index = 2;
+            if(romanNumeral.length() > 2 && romanNumeral.substring(2, 3).equalsIgnoreCase("I")) {
+                index = 3;
+            }
+        }
+        String numeral = romanNumeral.substring(0, index);
+        String romanType = romanNumeral.substring(index);
+        switch(numeral.toUpperCase()) {
+            case "I":
+                base = key.get(0);
+            break;
+            case "II":
+                base = key.get(1);
+            break;
+            case "III":
+                base = key.get(2);
+            break;
+            case "IV":
+                base = key.get(3);
+            break;
+            case "V":
+                base = key.get(4);
+            break;
+            case "VI":
+                base = key.get(5);
+            break;
+            case "VII":
+                base = key.get(6);
+            break;
+            default:
+                base = key.get(0);
+        }
+        switch(romanType) {
+            case "":
+                if(romanNumeral.toUpperCase().equals(romanNumeral)) {
+                    type = "M";
+                } else {
+                    type = "m";
+                }
+            break;
+            case "7":
+                if(romanNumeral.toUpperCase().equals(romanNumeral)) {
+                    type = "7";
+                } else {
+                    type = "m7";
+                }
+            break;
+            default:
+                type = romanType;
+        }
+        name = base.toString() + type;
+        Chord c = new Chord(name);
+        chord = c.chord;
+        id = c.id;
+    }
+
     public String toString() {
         return name;
     }
