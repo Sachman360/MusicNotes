@@ -30,6 +30,9 @@ public class Chord {
 
     public Chord(String n) {
         name = n;
+        if(name.isEmpty()) {
+            return;
+        }
         int index = 1;
         if(name.substring(1, 2).equals("#") || name.substring(1, 2).equals("b")) {
             index = 2;

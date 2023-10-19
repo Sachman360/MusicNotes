@@ -64,5 +64,6 @@ public class Main {
         MusicMaker mm = new MusicMaker();
         Song aisong = mm.generateSong();
         System.out.println(aisong);
+
     }
 }
