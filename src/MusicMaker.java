@@ -31,23 +31,26 @@ public class MusicMaker {
         for(int l = 0; l < length; l++) {
             for(int i = 0; i < chords.size(); i++) {
                 song.addChord(chords.get(i), measureLength);
-                if(i == chords.size() - 1) {
+                if(i == chords.size() - 1 && l == length - 1) {
                     song.addNote(getRandomNote(scale, chords.get(i)));
                 } else {
                     for(int j = 0; j < measureLength; j++) {
                         if(j % (measureLength / beats) == 0) {
                             song.addNote(getRandomNote(scale, chords.get(i)));
+                            //System.out.println("Added required note at position " + song.melody.size());
                         } else if(random.nextInt(3) < 1) {
                             song.addNote(getRandomNote(scale, chords.get(i)));
+                            //System.out.println("Added note at position " + song.melody.size());
                         } else {
                             song.addNote(new Note(""));
+                            //System.out.println("Added rest at position " + song.melody.size());
                         }
 
                     }
                 }
             }
         }
-        System.out.println(song);
+        //System.out.println(song);
         editMelody(song);
         return song;
     }
@@ -161,7 +164,7 @@ public class MusicMaker {
                         //System.out.println(i1 + " " + i2 + " " + n1 + " " + n2);
                         int interval = shiftScale(noteStrings, s.melody.get(i1).toString(), s.melody.get(i2).toString());
                         if(interval == 2) {
-                            System.out.println(s.melody.get(i1) + " " + s.melody.get(i2) + " " + interval);
+                            //System.out.println(s.melody.get(i1) + " " + s.melody.get(i2) + " " + interval);
                             Note n = new Note(noteStrings.get((noteStrings.indexOf(n1.toString()) + noteStrings.indexOf(n2.toString())) / 2));
                             s.melody.set(i1 + 1, n);
                         }

@@ -1,9 +1,17 @@
 import java.util.*;
 
 public class Note {
+
+    /** Class variables **/
+
     private String name;
     private int octave;
     private int id;
+    private final String[] noteNames = {"C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B", "B#", "Db", " ", "D#", " ", "E#", "Gb", " ", "G#", " ", "A#", "Cb"};
+
+
+
+    /** Constructors **/
 
     public Note(String n, int o) {
         name = n;
@@ -29,15 +37,72 @@ public class Note {
 
     public Note(int idNum) {
         id = idNum;
-        int position = id;
-        while(position >= 12) {
-            position -= 12;
-            octave++;
-        }
+        octave = id / 12;
+        int position = id % 12;
         name = getName(position);
     }
 
-    public void sharp() {
+
+
+    /** Methods **/
+
+    // Basic get and print methods
+
+    public String toString() {
+        return name;
+    }
+
+    public void printDescription() {
+        System.out.println(name + octave + ", ID: " + id);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getOctave() {
+        return octave;
+    }
+
+    // Methods for setting name/position
+
+    public int getPosition() {
+        for(int i = 0; i < noteNames.length; i++) {
+            if(name.equals(noteNames[i])) {
+                return i % 12;
+            }
+        }
+        return -1;
+    }
+
+    public String getName(int position) {
+        if(position < 12) {
+            return noteNames[position];
+        }
+        return "";
+    }
+
+    public void toggleEquivalentName() {
+        for(int i = 0; i < noteNames.length; i++) {
+            if(name.equals(noteNames[i])) {
+                if(i >= 12) {
+                    if(!noteNames[i - 12].equals(" ")) {
+                        name = noteNames[i - 12];
+                    }
+                    return;
+                } else {
+                    if(!noteNames[i + 12].equals(" ")) {
+                        name = noteNames[i + 12];
+                    }
+                    return;
+                }
+            }
+        }
+    }
+
+    // Note editing methods
+
+    public Note sharp() {
         if(id % 12 == 11) {
             octave++;
         }
@@ -51,20 +116,13 @@ public class Note {
                 break;
                 case "#":
                     name += "#";
-                    /*
-                    toggleEquivalentName();
-                    if(id % 12 == 0) {
-                        octave--;
-                    }
-                    id--;
-                    sharp();
-                    */
                 break;
             }
         }
+        return this;
     }
 
-    public void flat() {
+    public Note flat() {
         if(id % 12 == 0) {
             octave--;
         }
@@ -78,157 +136,9 @@ public class Note {
                 break;
                 case "b":
                     name += "b";
-                    /*
-                    toggleEquivalentName();
-                    if(id % 12 == 11) {
-                        octave++;
-                    }
-                    id++;
-                    flat();
-                    */
                 break;
             }
         }
-    }
-
-    public int getPosition() {
-        switch(name) {
-            case "C", "B#":
-                return 0;
-            case "C#", "Db":
-                return 1;
-            case "D":
-                return 2;
-            case "D#", "Eb":
-                return 3;
-            case "E", "Fb":
-                return 4;
-            case "F", "E#":
-                return 5;
-            case "F#", "Gb":
-                return 6;
-            case "G":
-                return 7;
-            case "G#", "Ab":
-                return 8;
-            case "A":
-                return 9;
-            case "A#", "Bb":
-                return 10;
-            case "B", "Cb":
-                return 11;
-            default:
-                return -1;
-        }
-    }
-
-    public String getName(int position) {
-        switch(position) {
-            case 0:
-                return "C";
-            case 1:
-                return "C#";
-            case 2:
-                return "D";
-            case 3:
-                return "Eb";
-            case 4:
-                return "E";
-            case 5:
-                return "F";
-            case 6:
-                return "F#";
-            case 7:
-                return "G";
-            case 8:
-                return "Ab";
-            case 9:
-                return "A";
-            case 10:
-                return "Bb";
-            case 11:
-                return "B";
-            default:
-                return "";
-        }
-    }
-
-    public void toggleEquivalentName() {
-        switch(name) {
-            case "C":
-                name = "B#";
-            break;
-            case "B#":
-                name = "C";
-            break;
-            case "C#":
-                name = "Db";
-            break;
-            case "Db":
-                name = "C#";
-            break;
-            case "D":
-            break;
-            case "D#":
-                name = "Eb";
-            break;
-            case "Eb":
-                name = "D#";
-            break;
-            case "E":
-                name = "Fb";
-            break;
-            case "Fb":
-                name = "E";
-            break;
-            case "F":
-                name = "E#";
-            break;
-            case "E#":
-                name = "F";
-            break;
-            case "F#":
-                name = "Gb";
-            break;
-            case "Gb":
-                name = "F#";
-            break;
-            case "G":
-            break;
-            case "G#":
-                name = "Ab";
-            break;
-            case "Ab":
-                name = "G#";
-            break;
-            case "A":
-            break;
-            case "A#":
-                name = "Bb";
-            break;
-            case "Bb":
-                name = "A#";
-            break;
-            case "B":
-                name = "Cb";
-            break;
-            case "Cb":
-                name = "B";
-            break;
-            default:
-
-        }
-    }
-
-    public String toString() {
-        return name;
-    }
-
-    public void printDescription() {
-        System.out.println(name + octave + ", ID: " + id);
-    }
-
-    public int getId() {
-        return id;
+        return this;
     }
 }

@@ -1,11 +1,18 @@
 import java.util.*;
 
 public class Chord {
+
+    /** Class Variables **/
+
     protected List<Note> chord;
     protected String name;
     protected Note base;
     protected String type;
     protected int id;
+
+
+
+    /** Constructors **/
 
     public Chord() {
 
@@ -13,19 +20,17 @@ public class Chord {
 
     public Chord(List<Note> notes) {
         chord = notes;
+        Chord c = new Chord();
         if(chord.size() == 3) {
-            Triad t = new Triad(chord.get(0), chord.get(1), chord.get(2));
-            name = t.name;
-            base = t.base;
-            type = t.type;
-            id = t.id;
+            c = new Triad(chord.get(0), chord.get(1), chord.get(2));
+
         } else if(chord.size() == 4) {
-            Seventh s = new Seventh(chord.get(0), chord.get(1), chord.get(2), chord.get(3));
-            name = s.name;
-            base = s.base;
-            type = s.type;
-            id = s.id;
+            c = new Seventh(chord.get(0), chord.get(1), chord.get(2), chord.get(3));
         }
+        name = c.name;
+        base = c.base;
+        type = c.type;
+        id = c.id;
     }
 
     public Chord(String n) {
@@ -34,76 +39,55 @@ public class Chord {
             return;
         }
         int index = 1;
-        if(name.substring(1, 2).equals("#") || name.substring(1, 2).equals("b")) {
-            index = 2;
+        char end = name.charAt(index);
+        while(end == '#' || end == 'b') {
+            index++;
+            end = name.charAt(index);
         }
         base = new Note(name.substring(0, index));
         type = name.substring(index);
         Key k = new Key(base, "M");
-        Triad t;
-        Seventh s;
+        List<Note> scale = k.scale;
+
+        Chord c = new Chord();
+        Note b = scale.get(0);
+        Note m = scale.get(2);
+        Note t = scale.get(4);
+        Note s = scale.get(6);
         switch(type) {
             case "M":
-                t = new Triad(k.scale.get(0), k.scale.get(2), k.scale.get(4));
-                chord = t.chord;
-                id = t.id;
+                c = new Triad(b, m, t);
             break;
             case "m":
-                k.scale.get(2).flat();
-                t = new Triad(k.scale.get(0), k.scale.get(2), k.scale.get(4));
-                chord = t.chord;
-                id = t.id;
+                c = new Triad(b, m.flat(), t);
             break;
             case "*":
-                k.scale.get(2).flat();
-                k.scale.get(4).flat();
-                t = new Triad(k.scale.get(0), k.scale.get(2), k.scale.get(4));
-                chord = t.chord;
-                id = t.id;
+                c = new Triad(b, m.flat(), t.flat());
             break;
             case "+":
-                k.scale.get(4).sharp();
-                t = new Triad(k.scale.get(0), k.scale.get(2), k.scale.get(4));
-                chord = t.chord;
-                id = t.id;
+                c = new Triad(b, m, t.sharp());
             break;
             case "M7":
-                s = new Seventh(k.scale.get(0), k.scale.get(2), k.scale.get(4), k.scale.get(6));
-                chord = s.chord;
-                id = s.id;
+                c = new Seventh(b, m, t, s);
             break;
             case "m7":
-                k.scale.get(2).flat();
-                k.scale.get(6).flat();
-                s = new Seventh(k.scale.get(0), k.scale.get(2), k.scale.get(4), k.scale.get(6));
-                chord = s.chord;
-                id = s.id;
+                c = new Seventh(b, m.flat(), t, s.flat());
             break;
             case "7":
-                k.scale.get(6).flat();
-                s = new Seventh(k.scale.get(0), k.scale.get(2), k.scale.get(4), k.scale.get(6));
-                chord = s.chord;
-                id = s.id;
+                c = new Seventh(b, m, t, s.flat());
             break;
             case "/*":
-                k.scale.get(2).flat();
-                k.scale.get(4).flat();
-                k.scale.get(6).flat();
-                s = new Seventh(k.scale.get(0), k.scale.get(2), k.scale.get(4), k.scale.get(6));
-                chord = s.chord;
-                id = s.id;
+                c = new Seventh(b, m.flat(), t.flat(), s.flat());
             break;
             case "*7":
-                k.scale.get(2).flat();
-                k.scale.get(4).flat();
-                k.scale.get(6).flat();
-                k.scale.get(6).flat();
-                s = new Seventh(k.scale.get(0), k.scale.get(2), k.scale.get(4), k.scale.get(6));
-                chord = s.chord;
-                id = s.id;
+                c = new Seventh(b, m.flat(), t.flat(), s.flat().flat());
             break;
         }
+        chord = c.chord;
+        id = c.id;
     }
+
+    // CURRENT POSITION IN EFFICIENCY CHECK
 
     public Chord(String romanNumeral, Key k) {
         List<Note> key = k.scale;
