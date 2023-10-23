@@ -3,27 +3,28 @@ import java.util.*;
 public class Seventh extends Chord{
 
     public Seventh(Note i, Note j, Note k, Note l) {
-        chord = new ArrayList<>(Arrays.asList(i, j, k, l));;
+        chord = new ArrayList<>(Arrays.asList(i, j, k, l));
+        base = getBase();
         List<Note> temp = new ArrayList<>(Arrays.asList(i, j, k, l));
         sortTemp(temp);
-        base = temp.get(0);
+        root = temp.get(0);
         type = getType(temp);
-        name = base + type;
+        name = root + type;
         switch(type) {
             case "M7":
-                id = base.getPosition() + 48;
+                id = root.getPosition() + 48;
             break;
             case "m7":
-                id = base.getPosition() + 60;
+                id = root.getPosition() + 60;
             break;
             case "7":
-                id = base.getPosition() + 72;
+                id = root.getPosition() + 72;
             break;
             case "/*":
-                id = base.getPosition() + 84;
+                id = root.getPosition() + 84;
             break;
             case "*7":
-                id = base.getPosition() + 96;
+                id = root.getPosition() + 96;
             break;
             default:
                 id = -1;

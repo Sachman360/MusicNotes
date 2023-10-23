@@ -3,24 +3,25 @@ import java.util.*;
 public class Triad extends Chord {
 
     public Triad(Note i, Note j, Note k) {
-        chord = new ArrayList<>(Arrays.asList(i, j, k));;
+        chord = new ArrayList<>(Arrays.asList(i, j, k));
+        base = getBase();
         List<Note> temp = new ArrayList<>(Arrays.asList(i, j, k));
         sortTemp(temp);
-        base = temp.get(0);
+        root = temp.get(0);
         type = getType(temp);
-        name = base + type;
+        name = root + type;
         switch(type) {
             case "M":
-                id = base.getPosition();
+                id = root.getPosition();
                 break;
             case "m":
-                id = base.getPosition() + 12;
+                id = root.getPosition() + 12;
             break;
             case "*":
-                id = base.getPosition() + 24;
+                id = root.getPosition() + 24;
             break;
             case "+":
-                id = base.getPosition() + 36;
+                id = root.getPosition() + 36;
                 break;
             default:
                 id = -1;

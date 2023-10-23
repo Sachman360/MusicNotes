@@ -6,6 +6,7 @@ public class Chord {
 
     protected List<Note> chord;
     protected String name;
+    protected Note root;
     protected Note base;
     protected String type;
     protected int id;
@@ -20,6 +21,8 @@ public class Chord {
 
     public Chord(List<Note> notes) {
         chord = notes;
+        sort(chord);
+        base = getBase();
         Chord c = new Chord();
         if(chord.size() == 3) {
             c = new Triad(chord.get(0), chord.get(1), chord.get(2));
@@ -28,7 +31,7 @@ public class Chord {
             c = new Seventh(chord.get(0), chord.get(1), chord.get(2), chord.get(3));
         }
         name = c.name;
-        base = c.base;
+        root = c.root;
         type = c.type;
         id = c.id;
     }
@@ -44,9 +47,9 @@ public class Chord {
             index++;
             end = name.charAt(index);
         }
-        base = new Note(name.substring(0, index));
+        root = new Note(name.substring(0, index));
         type = name.substring(index);
-        Key k = new Key(base, "M");
+        Key k = new Key(root, "M");
         List<Note> scale = k.scale;
 
         Chord c = new Chord();
@@ -87,43 +90,48 @@ public class Chord {
         id = c.id;
     }
 
-    // CURRENT POSITION IN EFFICIENCY CHECK
-
     public Chord(String romanNumeral, Key k) {
         List<Note> key = k.scale;
-        int index = 1;
-        if(romanNumeral.length() > 1 && (romanNumeral.substring(1, 2).equalsIgnoreCase("I") || romanNumeral.substring(1, 2).equalsIgnoreCase("V"))) {
-            index = 2;
-            if(romanNumeral.length() > 2 && romanNumeral.substring(2, 3).equalsIgnoreCase("I")) {
-                index = 3;
+        int index = 0;
+        String end = romanNumeral.substring(index, index + 1);
+        boolean finalIndex = false;
+        while(!finalIndex) {
+            finalIndex = true;
+            if(end.equalsIgnoreCase("I") || end.equalsIgnoreCase("V")) {
+                index++;
+                if(index != romanNumeral.length()) {
+                    finalIndex = false;
+                }
             }
+            end = romanNumeral.substring(index, index + 1);
         }
         String numeral = romanNumeral.substring(0, index);
         String romanType = romanNumeral.substring(index);
+        System.out.println(romanNumeral + " " + index + " " + numeral + " " + romanType);
         switch(numeral.toUpperCase()) {
             case "I":
-                base = key.get(0);
+                root = key.get(0);
             break;
             case "II":
-                base = key.get(1);
+                root = key.get(1);
             break;
             case "III":
-                base = key.get(2);
+                root = key.get(2);
             break;
             case "IV":
-                base = key.get(3);
+                root = key.get(3);
             break;
             case "V":
-                base = key.get(4);
+                root = key.get(4);
             break;
             case "VI":
-                base = key.get(5);
+                root = key.get(5);
             break;
             case "VII":
-                base = key.get(6);
+                root = key.get(6);
             break;
             default:
-                base = key.get(0);
+                root = key.get(0);
         }
         switch(romanType) {
             case "":
@@ -143,23 +151,47 @@ public class Chord {
             default:
                 type = romanType;
         }
-        name = base.toString() + type;
+        name = root.toString() + type;
         Chord c = new Chord(name);
         chord = c.chord;
         id = c.id;
     }
+
+
+
+    /** Methods **/
+
+    // Basic get and print methods
 
     public String toString() {
         return name;
     }
 
     public void printDescription() {
-        System.out.println(name + ": " + chord + "   ID: " + id);
+        if(base == null) {
+            System.out.println();
+            return;
+        }
+        String over = "";
+        if(base.getPosition() != root.getPosition()) {
+            over = "/" + base.toString();
+        }
+        System.out.println(name + over +  ": " + chord + "   ID: " + id);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public List<Note> getChord() {
+        return chord;
+    }
+
+    // Roman numeral and base get methods
 
     public String getRomanNumeral(Key k) {
         List<Note> key = k.scale;
-        String check = base.toString();
+        String check = root.toString();
         String numeral = "";
         if(check.equals(key.get(0).toString())) {
             numeral = "I";
@@ -193,6 +225,28 @@ public class Chord {
                 return numeral + "7";
             default:
                 return "?";
+        }
+    }
+
+    public Note getBase() {
+        int index = 0;
+        int minId = 200;
+        for(int i = 0; i < chord.size(); i++) {
+            if(chord.get(i).getId() < minId) {
+                minId = chord.get(i).getId();
+                index = i;
+            }
+        }
+        return chord.get(index);
+    }
+
+    public void sort(List<Note> notes) {
+        for(int i = 0; i < notes.size(); i++) {
+            for(int j = 0; j < notes.size() - i - 1; j++) {
+                if(notes.get(j).getId() > notes.get(j + 1).getId()) {
+                    notes.add(j + 1, notes.remove(j));
+                }
+            }
         }
     }
 }
