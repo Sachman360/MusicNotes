@@ -1,10 +1,12 @@
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 
 public class Chord {
 
     /** Class Variables **/
 
-    protected List<Note> chord;
+    protected Set<Note> chord;
     protected String name;
     protected Note root;
     protected Note base;
@@ -20,15 +22,15 @@ public class Chord {
     }
 
     public Chord(List<Note> notes) {
-        chord = notes;
-        sort(chord);
+        chord = new TreeSet<Note>();
+        chord.addAll(notes);
         base = getBase();
         Chord c = new Chord();
         if(chord.size() == 3) {
-            c = new Triad(chord.get(0), chord.get(1), chord.get(2));
+            c = new Triad(chord);
 
         } else if(chord.size() == 4) {
-            c = new Seventh(chord.get(0), chord.get(1), chord.get(2), chord.get(3));
+            c = new Seventh(chord);
         }
         name = c.name;
         root = c.root;
@@ -48,42 +50,64 @@ public class Chord {
             end = name.charAt(index);
         }
         root = new Note(name.substring(0, index));
+        base = root;
         type = name.substring(index);
         Key k = new Key(root, "M");
         List<Note> scale = k.scale;
+
+
 
         Chord c = new Chord();
         Note b = scale.get(0);
         Note m = scale.get(2);
         Note t = scale.get(4);
         Note s = scale.get(6);
+        Set<Note> notes = new TreeSet<>(Arrays.asList(b, m, t));
         switch(type) {
             case "M":
-                c = new Triad(b, m, t);
+                c = new Triad(notes);
             break;
             case "m":
-                c = new Triad(b, m.flat(), t);
+                m.flat();
+                c = new Triad(notes);
             break;
             case "*":
-                c = new Triad(b, m.flat(), t.flat());
+                m.flat();
+                t.flat();
+                c = new Triad(notes);
             break;
             case "+":
-                c = new Triad(b, m, t.sharp());
+                t.sharp();
+                c = new Triad(notes);
             break;
             case "M7":
-                c = new Seventh(b, m, t, s);
+                notes.add(s);
+                c = new Seventh(notes);
             break;
             case "m7":
-                c = new Seventh(b, m.flat(), t, s.flat());
+                notes.add(s);
+                m.flat();
+                s.flat();
+                c = new Seventh(notes);
             break;
             case "7":
-                c = new Seventh(b, m, t, s.flat());
+                notes.add(s);
+                s.flat();
+                c = new Seventh(notes);
             break;
             case "/*":
-                c = new Seventh(b, m.flat(), t.flat(), s.flat());
+                notes.add(s);
+                m.flat();
+                t.flat();
+                s.flat();
+                c = new Seventh(notes);
             break;
             case "*7":
-                c = new Seventh(b, m.flat(), t.flat(), s.flat().flat());
+                notes.add(s);
+                m.flat();
+                t.flat();
+                s.flat().flat();
+                c = new Seventh(notes);
             break;
         }
         chord = c.chord;
@@ -93,21 +117,21 @@ public class Chord {
     public Chord(String romanNumeral, Key k) {
         List<Note> key = k.scale;
         int index = 0;
-        String end = romanNumeral.substring(index, index + 1);
+        String end;
         boolean finalIndex = false;
         while(!finalIndex) {
             finalIndex = true;
+            end = romanNumeral.substring(index, index + 1);
             if(end.equalsIgnoreCase("I") || end.equalsIgnoreCase("V")) {
                 index++;
                 if(index != romanNumeral.length()) {
                     finalIndex = false;
                 }
             }
-            end = romanNumeral.substring(index, index + 1);
         }
         String numeral = romanNumeral.substring(0, index);
         String romanType = romanNumeral.substring(index);
-        System.out.println(romanNumeral + " " + index + " " + numeral + " " + romanType);
+        //System.out.println(romanNumeral + " " + index + " " + numeral + " " + romanType + " ");
         switch(numeral.toUpperCase()) {
             case "I":
                 root = key.get(0);
@@ -154,6 +178,7 @@ public class Chord {
         name = root.toString() + type;
         Chord c = new Chord(name);
         chord = c.chord;
+        base = root;
         id = c.id;
     }
 
@@ -168,7 +193,7 @@ public class Chord {
     }
 
     public void printDescription() {
-        if(base == null) {
+        if(root == null) {
             System.out.println();
             return;
         }
@@ -183,7 +208,7 @@ public class Chord {
         return id;
     }
 
-    public List<Note> getChord() {
+    public Set<Note> getChord() {
         return chord;
     }
 
@@ -228,25 +253,12 @@ public class Chord {
         }
     }
 
-    public Note getBase() {
-        int index = 0;
-        int minId = 200;
-        for(int i = 0; i < chord.size(); i++) {
-            if(chord.get(i).getId() < minId) {
-                minId = chord.get(i).getId();
-                index = i;
-            }
-        }
-        return chord.get(index);
-    }
+    // no
 
-    public void sort(List<Note> notes) {
-        for(int i = 0; i < notes.size(); i++) {
-            for(int j = 0; j < notes.size() - i - 1; j++) {
-                if(notes.get(j).getId() > notes.get(j + 1).getId()) {
-                    notes.add(j + 1, notes.remove(j));
-                }
-            }
+    public Note getBase() {
+        for(Note n : chord) {
+            return n;
         }
+        return new Note();
     }
 }

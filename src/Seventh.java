@@ -2,10 +2,13 @@ import java.util.*;
 
 public class Seventh extends Chord{
 
-    public Seventh(Note i, Note j, Note k, Note l) {
-        chord = new ArrayList<>(Arrays.asList(i, j, k, l));
+    public Seventh(Set<Note> notes) {
+        if(notes.size() != 4) {
+            throw new IllegalArgumentException();
+        }
+        chord = notes;
         base = getBase();
-        List<Note> temp = new ArrayList<>(Arrays.asList(i, j, k, l));
+        List<Note> temp = new ArrayList<>(chord);
         sortTemp(temp);
         root = temp.get(0);
         type = getType(temp);

@@ -2,10 +2,13 @@ import java.util.*;
 
 public class Triad extends Chord {
 
-    public Triad(Note i, Note j, Note k) {
-        chord = new ArrayList<>(Arrays.asList(i, j, k));
+    public Triad(Set<Note> notes) {
+        if(notes.size() != 3) {
+            throw new IllegalArgumentException();
+        }
+        chord = notes;
         base = getBase();
-        List<Note> temp = new ArrayList<>(Arrays.asList(i, j, k));
+        List<Note> temp = new ArrayList<>(chord);
         sortTemp(temp);
         root = temp.get(0);
         type = getType(temp);

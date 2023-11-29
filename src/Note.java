@@ -1,45 +1,57 @@
 import java.util.*;
 
-public class Note {
+public class Note implements Comparable<Note> {
 
     /** Class variables **/
 
     private String name;
     private int octave;
     private int id;
-    private final String[] noteNames = {"C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B", "B#", "Db", " ", "D#", " ", "E#", "Gb", " ", "G#", " ", "A#", "Cb"};
+
+    private final String[] NOTE_NAMES = {"C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B", "B#", "Db", " ", "D#", " ", "E#", "Gb", " ", "G#", " ", "A#", "Cb"};
+    private final Map<Integer, Set<String>> noteNames = getNoteNames();
+
+    private Map<Integer, Set<String>> getNoteNames() {
+        Map<Integer, Set<String>> noteNames = new TreeMap<>();
+        noteNames.put(0, new HashSet<>(Arrays.asList("C", "B#")));
+        noteNames.put(1, new HashSet<>(Arrays.asList("C#", "Db")));
+        noteNames.put(2, new HashSet<>(Arrays.asList("D")));
+        noteNames.put(3, new HashSet<>(Arrays.asList("D#", "Eb")));
+        noteNames.put(4, new HashSet<>(Arrays.asList("E", "Fb")));
+        noteNames.put(5, new HashSet<>(Arrays.asList("F")));
+        noteNames.put(6, new HashSet<>(Arrays.asList("F#", "Gb")));
+        noteNames.put(7, new HashSet<>(Arrays.asList("G")));
+        noteNames.put(8, new HashSet<>(Arrays.asList("G#", "Ab")));
+        noteNames.put(9, new HashSet<>(Arrays.asList("A")));
+        noteNames.put(10, new HashSet<>(Arrays.asList("A#", "Bb")));
+        noteNames.put(11, new HashSet<>(Arrays.asList("B", "Cb")));
+        return noteNames;
+    }
 
 
 
     /** Constructors **/
 
+    public Note() {
+
+    }
+
     public Note(String n, int o) {
         name = n;
         octave = o;
-        int pos = getPosition();
-        if(pos != -1) {
-            id = pos + (12 * octave);
-        } else {
-            id = pos;
-        }
+        id = getPosition() + (12 * octave);
     }
 
     public Note(String n) {
         name = n;
         octave = 4;
-        int pos = getPosition();
-        if(pos != -1) {
-            id = pos + (12 * octave);
-        } else {
-            id = pos;
-        }
+        id = getPosition() + (12 * octave);
     }
 
     public Note(int idNum) {
+        name = getName(idNum % 12);
+        octave = idNum / 12;
         id = idNum;
-        octave = id / 12;
-        int position = id % 12;
-        name = getName(position);
     }
 
 
@@ -47,6 +59,18 @@ public class Note {
     /** Methods **/
 
     // Basic get and print methods
+
+    public String getName() {
+        return name;
+    }
+
+    public int getOctave() {
+        return octave;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String toString() {
         return name;
@@ -56,43 +80,39 @@ public class Note {
         System.out.println(name + octave + ", ID: " + id);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getOctave() {
-        return octave;
-    }
-
     // Methods for setting name/position
 
+    // Considering adding a parameter to this method
+
     public int getPosition() {
-        for(int i = 0; i < noteNames.length; i++) {
-            if(name.equals(noteNames[i])) {
+        for(int i = 0; i < NOTE_NAMES.length; i++) {
+            if(name.equals(NOTE_NAMES[i])) {
                 return i % 12;
             }
         }
-        return -1;
+        throw new IllegalArgumentException();
     }
 
     public String getName(int position) {
-        if(position < 12) {
-            return noteNames[position];
+        if(position < 0 || position >= 12) {
+            throw new IllegalArgumentException();
         }
-        return "";
+        return NOTE_NAMES[position];
     }
 
+    // Consider deleting this method
+
     public void toggleEquivalentName() {
-        for(int i = 0; i < noteNames.length; i++) {
-            if(name.equals(noteNames[i])) {
+        for(int i = 0; i < NOTE_NAMES.length; i++) {
+            if(name.equals(NOTE_NAMES[i])) {
                 if(i >= 12) {
-                    if(!noteNames[i - 12].equals(" ")) {
-                        name = noteNames[i - 12];
+                    if(!NOTE_NAMES[i - 12].equals(" ")) {
+                        name = NOTE_NAMES[i - 12];
                     }
                     return;
                 } else {
-                    if(!noteNames[i + 12].equals(" ")) {
-                        name = noteNames[i + 12];
+                    if(!NOTE_NAMES[i + 12].equals(" ")) {
+                        name = NOTE_NAMES[i + 12];
                     }
                     return;
                 }
@@ -140,5 +160,22 @@ public class Note {
             }
         }
         return this;
+    }
+
+    // Equals and Compare methods
+
+    public boolean equals(Object o) {
+        if(o instanceof Note) {
+            if(o == this) {
+                return true;
+            } else if(((Note) o).id == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int compareTo(Note o) {
+        return Integer.compare(id, o.id);
     }
 }

@@ -102,7 +102,7 @@ public class MusicMaker {
         List<String> chord = new ArrayList<>();
         List<String> noteStrings = new ArrayList<>();
         for(int i = 0; i < c.chord.size(); i++) {
-            chord.add(c.chord.get(i).toString());
+            //chord.add(c.chord.get(i).toString());
         }
         for(int i = 0; i < notes.size(); i++) {
             noteStrings.add(notes.get(i).toString());
@@ -148,7 +148,7 @@ public class MusicMaker {
             List<String> chord = new ArrayList<>();
             Chord c = s.chords.get(i);
             for(int k = 0; k < c.chord.size(); k++) {
-                chord.add(c.chord.get(k).toString());
+                //chord.add(c.chord.get(k).toString());
             }
             for(int j = 0; j < measureLength; j++) {
                 if(random.nextInt(10) > 5) {
