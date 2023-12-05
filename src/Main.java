@@ -5,12 +5,12 @@ public class Main {
         System.out.println("Welcome to Music Notes!");
 
         //Chord c = new Chord(new ArrayList<Note>(Arrays.asList(new Note(23), new Note(18), new Note(27))));
-        Chord c = new Chord("IV", new Key(new Note("C"), "M"));
-        c.printDescription();
+        Chord c = new Chord("VI7", new Key("D"));
+        //c.printDescription();
 
         MusicMaker mm = new MusicMaker();
-        //Song aisong = mm.generateSong();
-        //System.out.println(aisong);
+        Song aisong = mm.generateSong();
+        System.out.println(aisong);
 
     }
 }

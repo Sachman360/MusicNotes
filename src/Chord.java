@@ -21,9 +21,8 @@ public class Chord {
 
     }
 
-    public Chord(List<Note> notes) {
-        chord = new TreeSet<Note>();
-        chord.addAll(notes);
+    public Chord(Collection<Note> notes) {
+        chord = new TreeSet<Note>(notes);
         base = getBase();
         Chord c = new Chord();
         if(chord.size() == 3) {
@@ -54,8 +53,6 @@ public class Chord {
         type = name.substring(index);
         Key k = new Key(root, "M");
         List<Note> scale = k.scale;
-
-
 
         Chord c = new Chord();
         Note b = scale.get(0);

@@ -16,7 +16,7 @@ public class Triad extends Chord {
         switch(type) {
             case "M":
                 id = root.getPosition();
-                break;
+            break;
             case "m":
                 id = root.getPosition() + 12;
             break;
@@ -30,6 +30,21 @@ public class Triad extends Chord {
                 id = -1;
         }
 
+        List<String> keys = new ArrayList<>(Arrays.asList("C", "D", "E", "F", "G", "A", "B"));
+        int pos = -1;
+        boolean first = true;
+        for(Note n : temp) {
+            String letter = n.toString().substring(0, 1);
+            if(first) {
+                first = false;
+                pos = keys.indexOf(letter);
+            } else {
+                if(!(keys.indexOf(letter) == pos + 2 || keys.indexOf(letter) + 7 == pos + 2)) {
+                    n.toggleEquivalentName();
+                }
+                pos = keys.indexOf(n.toString().substring(0, 1));
+            }
+        }
     }
 
     public void sortTemp(List<Note> temp) {

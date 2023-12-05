@@ -12,6 +12,14 @@ public class Key {
         populateScale();
     }
 
+    public Key(Note n) {
+        this(n, "M");
+    }
+
+    public Key(String n) {
+        this(new Note(n));
+    }
+
     public void populateScale() {
         List<String> keys = new ArrayList<>(Arrays.asList("C", "D", "E", "F", "G", "A", "B"));
         List<Integer> intervals = new ArrayList<>(Arrays.asList(2, 2, 1, 2, 2, 2, 1));
@@ -24,25 +32,14 @@ public class Key {
             int index1 = keys.indexOf(scale.get(i).toString().substring(0, 1));
             int index2 = keys.indexOf(scale.get(i + 1).toString().substring(0, 1));
             if(index2 != index1 + 1 && index2 != 0) {
-                System.out.println(scale.get(i) + " " + index1 + "  " + scale.get(i + 1) + " " + index2);
+                //System.out.println(scale.get(i) + " " + index1 + "  " + scale.get(i + 1) + " " + index2);
                 scale.get(i + 1).toggleEquivalentName();
             } else if(index2 == 0 && index1 != 6) {
-                System.out.println(scale.get(i) + " " + index1 + "  " + scale.get(i + 1) + " " + index2);
+                //System.out.println(scale.get(i) + " " + index1 + "  " + scale.get(i + 1) + " " + index2);
                 scale.get(i + 1).toggleEquivalentName();
             }
         }
 
-        System.out.println();
-
-        for(Note kn : otherScale) {
-            kn.printDescription();
-        }
-        System.out.println();
-        for(Note kn : scale) {
-            kn.printDescription();
-        }
-        System.out.println();
-        System.out.println();
 
 
 

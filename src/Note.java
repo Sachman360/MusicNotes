@@ -85,6 +85,9 @@ public class Note implements Comparable<Note> {
     // Considering adding a parameter to this method
 
     public int getPosition() {
+        if(name.equals("")) {
+            return -1;
+        }
         for(int i = 0; i < NOTE_NAMES.length; i++) {
             if(name.equals(NOTE_NAMES[i])) {
                 return i % 12;

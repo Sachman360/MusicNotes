@@ -101,8 +101,8 @@ public class MusicMaker {
         Note n = new Note(random.nextInt(100));
         List<String> chord = new ArrayList<>();
         List<String> noteStrings = new ArrayList<>();
-        for(int i = 0; i < c.chord.size(); i++) {
-            //chord.add(c.chord.get(i).toString());
+        for(Note note : c.chord) {
+            chord.add(note.toString());
         }
         for(int i = 0; i < notes.size(); i++) {
             noteStrings.add(notes.get(i).toString());
