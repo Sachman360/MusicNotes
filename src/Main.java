@@ -1,7 +1,13 @@
+
 import java.util.*;
+import java.io.*;
+import javax.sound.sampled.*;
 
 public class Main {
     public static void main(String[] args) {
+
+        //AudioFileFormat aff =
+
         System.out.println("Welcome to Music Notes!");
 
         //Chord c = new Chord(new ArrayList<Note>(Arrays.asList(new Note(23), new Note(18), new Note(27))));
@@ -10,7 +16,9 @@ public class Main {
 
         MusicMaker mm = new MusicMaker();
         Song aisong = mm.generateSong();
-        System.out.println(aisong);
+        //System.out.println(aisong);
 
     }
+
+
 }

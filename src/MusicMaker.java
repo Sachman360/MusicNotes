@@ -10,8 +10,8 @@ public class MusicMaker {
         Key k = getRandomKey();
         Song song = new Song(k);
         List<Chord> chords = getRandomProgression(k);
-        List<Note> scale = k.scale;
-        if(k.type.equals("m")) {
+        List<Note> scale = k.scale();
+        if(k.getType().equals("m")) {
             Note leadingTone = new Note(scale.get(6).toString());
             leadingTone.sharp();
             scale.add(leadingTone);
@@ -82,9 +82,9 @@ public class MusicMaker {
         minorProgressions.add(new String[] {"i", "VII", "VI", "V"});
         minorProgressions.add(new String[] {"i", "iv", "VII", "III", "VI", "ii*", "V", "V7"});
 
-        if(k.type.equals("M")) {
+        if(k.getType().equals("M")) {
             progressions = majorProgressions;
-        } else if(k.type.equals("m")) {
+        } else if(k.getType().equals("m")) {
             progressions = minorProgressions;
         }
 
@@ -133,10 +133,10 @@ public class MusicMaker {
 
     public void editMelody(Song s) {
         Random random = new Random();
-        List<Note> scale = s.key.scale;
+        List<Note> scale = s.getKey().scale();
         List<String> noteStrings = new ArrayList<>();
-        int measureLength = ((s.melody.size() - 1) / (s.chords.size() - 1));
-        if(s.key.type.equals("m")) {
+        int measureLength = ((s.getMelody().size() - 1) / (s.getChords().size() - 1));
+        if(s.getKey().getType().equals("m")) {
             Note leadingTone = new Note(scale.get(6).toString());
             leadingTone.sharp();
             scale.add(leadingTone);
@@ -144,9 +144,9 @@ public class MusicMaker {
         for(int i = 0; i < scale.size(); i++) {
             noteStrings.add(scale.get(i).toString());
         }
-        for(int i = 0; i < s.chords.size(); i++) {
+        for(int i = 0; i < s.getChords().size(); i++) {
             List<String> chord = new ArrayList<>();
-            Chord c = s.chords.get(i);
+            Chord c = s.getChords().get(i);
             for(int k = 0; k < c.chord.size(); k++) {
                 //chord.add(c.chord.get(k).toString());
             }
@@ -156,17 +156,17 @@ public class MusicMaker {
                     int i1 = i * measureLength + j - 1;
                     int i2 = i * measureLength + j + 1;
 
-                    if(i1 >= 0 && i2 >= 0 && i1 < s.melody.size() && i2 < s.melody.size()) {
+                    if(i1 >= 0 && i2 >= 0 && i1 < s.getMelody().size() && i2 < s.getMelody().size()) {
 
-                        Note n1 = s.melody.get(i1);
-                        Note n2 = s.melody.get(i2);
+                        Note n1 = s.getMelody().get(i1);
+                        Note n2 = s.getMelody().get(i2);
 
                         //System.out.println(i1 + " " + i2 + " " + n1 + " " + n2);
-                        int interval = shiftScale(noteStrings, s.melody.get(i1).toString(), s.melody.get(i2).toString());
+                        int interval = shiftScale(noteStrings, s.getMelody().get(i1).toString(), s.getMelody().get(i2).toString());
                         if(interval == 2) {
                             //System.out.println(s.melody.get(i1) + " " + s.melody.get(i2) + " " + interval);
                             Note n = new Note(noteStrings.get((noteStrings.indexOf(n1.toString()) + noteStrings.indexOf(n2.toString())) / 2));
-                            s.melody.set(i1 + 1, n);
+                            s.getMelody().set(i1 + 1, n);
                         }
                     }
                 }

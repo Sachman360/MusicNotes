@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class Key {
-    Note note;
-    String type;
-    List<Note> scale;
+    private final Note note;
+    private final String type;
+    private final List<Note> scale;
 
     public Key(Note n, String t) {
         note = n;
@@ -88,6 +88,15 @@ public class Key {
             default:
                 return note.toString();
         }
+    }
+
+
+    public String getType() {
+        return type;
+    }
+
+    public List<Note> scale() {
+        return scale;
     }
 
     // WORK IN PROGRESS :/

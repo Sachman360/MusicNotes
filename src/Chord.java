@@ -52,7 +52,7 @@ public class Chord {
         base = root;
         type = name.substring(index);
         Key k = new Key(root, "M");
-        List<Note> scale = k.scale;
+        List<Note> scale = k.scale();
 
         Chord c = new Chord();
         Note b = scale.get(0);
@@ -112,7 +112,7 @@ public class Chord {
     }
 
     public Chord(String romanNumeral, Key k) {
-        List<Note> key = k.scale;
+        List<Note> key = k.scale();
         int index = 0;
         String end;
         boolean finalIndex = false;
@@ -212,7 +212,7 @@ public class Chord {
     // Roman numeral and base get methods
 
     public String getRomanNumeral(Key k) {
-        List<Note> key = k.scale;
+        List<Note> key = k.scale();
         String check = root.toString();
         String numeral = "";
         if(check.equals(key.get(0).toString())) {

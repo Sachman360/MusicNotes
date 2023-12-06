@@ -1,11 +1,11 @@
 import java.util.*;
 
 public class Song {
-    List<Note> melody;
-    List<Integer> melodyDurations;
-    List<Chord> chords;
-    List<Integer> chordDurations;
-    Key key;
+    private final List<Note> melody;
+    private final List<Integer> melodyDurations;
+    private final List<Chord> chords;
+    private final List<Integer> chordDurations;
+    private final Key key;
 
     public Song(Key k) {
         melody = new ArrayList<>();
@@ -80,5 +80,25 @@ public class Song {
         }
 
         return analysis;
+    }
+
+    public List<Note> getMelody() {
+        return melody;
+    }
+
+    public List<Integer> getMelodyDurations() {
+        return melodyDurations;
+    }
+
+    public List<Chord> getChords() {
+        return chords;
+    }
+
+    public List<Integer> getChordDurations() {
+        return chordDurations;
+    }
+
+    public Key getKey() {
+        return key;
     }
 }
